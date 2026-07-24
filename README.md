@@ -7,7 +7,7 @@ Releases can be found here - https://github.com/DDNStorage/exa-csi-driver/releas
 |--- |---|---|
 |>=2.9.0|>=2.14.0-ddn255|>=6.3.8 C1|
 |>=2.8.0|>=2.14.0-ddn252|>=6.3.7|
-|>=2.7.0|>=2.14.0-ddn235|>=6.3.5|
+|>=2.7.0|>=2.14.0-ddn235|>=6.3.5-2026021300|
 |2.3.0 to 2.6.0|>=2.14.0-ddn182|6.3.2 to 6.3.4|
 
 ## Feature List
@@ -89,7 +89,7 @@ Run ko2iblnd-mod if you are using Infiniband network
 oc apply -n openshift-kmm -f deploy/openshift/lustre-module/ko2iblnd-mod.yaml
 ```
 
-Make changes to the environment variables in deploy/openshift/lustre-module/lnet-lustre-configuration-ds.yaml (lines 34–37) according to your cluster’s network.
+Make changes to the environment variables in deploy/openshift/lustre-module/lnet-lustre-configuration-ds.yaml (lines 34–38) according to your cluster’s network.
 ```bash
         env:
           - name: NET_TYPE
@@ -97,6 +97,8 @@ Make changes to the environment variables in deploy/openshift/lustre-module/lnet
           - name: NET_IFACE
             value: "br-ex"  <--- interface name
 ```
+**Note:** Multirail configuration is supported. To use multiple interfaces, specify them separated by commas (e.g., `"ens192,ens224"`).
+
 Configure lnet and install lustre
 ```bash
 oc apply -n openshift-kmm -f deploy/openshift/lustre-module/lnet-lustre-configuration-ds.yaml

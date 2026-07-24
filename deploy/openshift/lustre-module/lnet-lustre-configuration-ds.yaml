@@ -33,6 +33,7 @@ spec:
         env:
           - name: NET_TYPE
             value: "tcp"
+          # For multirail configuration, specify multiple interfaces separated by commas (e.g., "ens192,ens224")
           - name: NET_IFACE
             value: "br-ex"
         lifecycle:
@@ -42,11 +43,24 @@ spec:
                 - /bin/sh
                 - -c
                 - |
-                  echo "Configuring LNet: net=${NET_TYPE}, iface=${NET_IFACE}"
+                  echo "Configuring LNet: net=${NET_TYPE}, iface_list=${NET_IFACE}"
+                  # Initialize LNet
                   lnetctl lnet configure
-                  lnetctl net add --net "${NET_TYPE}" --if "${NET_IFACE}"
+                  # Parse comma-separated interface list
+                  IFS=',' read -ra IFACES <<< "${NET_IFACE}"
+                  # Add each interface
+                  for iface in "${IFACES[@]}"; do
+                    # Trim whitespace (just in case)
+                    iface=$(echo "$iface" | xargs)
+                    echo "Adding interface: $iface"
+                    lnetctl net add --net "${NET_TYPE}" --if "${iface}"
+                  done
+                  # Load Lustre modules
                   modprobe lustre
                   modprobe mgc
+                  # Show status
+                  echo "=== LNet Status ==="
+                  lnetctl net show -v
           preStop:
             exec:
               command:
