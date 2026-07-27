@@ -89,7 +89,7 @@ Run ko2iblnd-mod if you are using Infiniband network
 oc apply -n openshift-kmm -f deploy/openshift/lustre-module/ko2iblnd-mod.yaml
 ```
 
-Make changes to the environment variables in deploy/openshift/lustre-module/lnet-lustre-configuration-ds.yaml (lines 34–37) according to your cluster’s network.
+Make changes to the environment variables in deploy/openshift/lustre-module/lnet-lustre-configuration-ds.yaml (lines 34–38) according to your cluster’s network.
 ```bash
         env:
           - name: NET_TYPE
@@ -97,6 +97,8 @@ Make changes to the environment variables in deploy/openshift/lustre-module/lnet
           - name: NET_IFACE
             value: "br-ex"  <--- interface name
 ```
+**Note:** Multirail configuration is supported. To use multiple interfaces, specify them separated by commas (e.g., `"ens192,ens224"`).
+
 Configure lnet and install lustre
 ```bash
 oc apply -n openshift-kmm -f deploy/openshift/lustre-module/lnet-lustre-configuration-ds.yaml
