@@ -5,7 +5,8 @@ Releases can be found here - https://github.com/DDNStorage/exa-csi-driver/releas
 ## Compatibility matrix
 |CSI driver version|EXAScaler client version|EXA Scaler server version|
 |--- |---|---|
-|>=2.9.0|>=2.14.0-ddn255|>=6.3.8 C1|
+|>=2.9.2|>=2.14.0-ddn255|>=6.3.8 C1|
+|2.9.0 and 2.9.1|>=2.14.0-ddn255|6.3.8|
 |>=2.8.0|>=2.14.0-ddn252|>=6.3.7|
 |>=2.7.0|>=2.14.0-ddn235|>=6.3.5-2026021300|
 |2.3.0 to 2.6.0|>=2.14.0-ddn182|6.3.2 to 6.3.4|
